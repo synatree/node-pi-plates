@@ -1,8 +1,7 @@
 var inherits = require('util').inherits;
-var BP = require('./BASEplate');
-var BASEplate = BP.BASEplate;
-
-var MOTORbaseADDR = 16;
+var BASEplate = require('./BASEplate');
+var ppCMD = require('./plate_comms').ppCMD;
+var MOTORbaseADDR =  require('./plate_comms').MOTORbaseADDR;
 
 function MOTORplate(addr) {
 	if (! (this instanceof MOTORplate))

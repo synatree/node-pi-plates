@@ -23,7 +23,6 @@ function init() {
 
 	for (var i = 0; i < 8; i++) {
 		var resp;
-/*
 		resp = getADDR(i + RELAYbaseADDR);
 		//console.log('relay response: ' + resp);
 		if (resp - RELAYbaseADDR == i) {
@@ -31,7 +30,6 @@ function init() {
 			RELAYplates[i] = new RELAYplate(i);
 
 		}
-*/
 		resp = getADDR(i + DAQCbaseADDR);
 		//console.log('daqc response: ' + resp);
 		if (resp - DAQCbaseADDR == i) {
@@ -39,27 +37,18 @@ function init() {
 			DAQCplates[i] = new DAQCplate(i);
 
 		}
-/*
 		resp = getADDR(i + MOTORbaseADDR);
 		console.log('motor response: ' + resp);
 		if (resp - MOTORbaseADDR == i) {
 			console.log('found MOTORplate at address: ' + i);
 			MOTORplates[i] = new MOTORplate(i);
 		}
-*/
 	}
 }
 
-setTimeout(function () {
-	init();
-	console.log(DAQCplates);
-}, 1000);
-
-/*
-
-module.exports = {
-	DAQCplates: DAQCplates,
-	RELAYplates: RELAYplates,
-	MOTORplates: MOTORplates
+function getADDR(addr) {
+	var res = ppCMD(addr, 0x00, 0, 0, 1);
+	return (res);
 }
- */
+console.log('checking address: ' + RELAYbaseADDR)
+console.log(getADDR(RELAYbaseADDR));

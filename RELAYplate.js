@@ -1,10 +1,8 @@
+var rpio = require('rpio');
 var inherits = require('util').inherits;
-var BP = require('./BASEplate');
-var BASEplate = BP.BASEplate;
-var ppCMD = BP.ppCMD;
-var rpio = BP.rpio;
-
-var RELAYbaseADDR = 24;
+var BASEplate = require('./BASEplate');
+var ppCMD = require('./plate_comms').ppCMD;
+var RELAYbaseADDR = require('./plate_comms').RELAYbaseADDR;
 
 function RELAYplate(addr) {
 	if (! (this instanceof RELAYplate))

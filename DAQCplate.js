@@ -1,9 +1,7 @@
 var inherits = require('util').inherits;
-var BP = require('./BASEplate');
-var BASEplate = BP.BASEplate;
-var ppCMD = BP.ppCMD;
-
-var DAQCbaseADDR = 8;
+var BASEplate = require('./BASEplate');
+var ppCMD = require('./plate_comms').ppCMD;
+var DAQCbaseADDR =  require('./plate_comms').DAQCbaseADDR;
 
 function DAQCplate(addr) {
 	if (! (this instanceof DAQCplate))

@@ -1,39 +1,5 @@
 var rpio = require('rpio');
-
-const ppFRAME = 22;
-const ppINT = 15;
-
-rpio.init({gpiomem: false});
-rpio.open(ppFRAME, rpio.OUTPUT, rpio.LOW);
-rpio.msleep(1);
-
-rpio.open(ppINT, rpio.INPUT, rpio.PULL_UP);
-
-rpio.spiBegin();
-rpio.spiChipSelect(1);
-
-function ppCMD(addr, cmd, param1, param2, bytes2return) {
-	rpio.spiSetClockDivider(850);
-	var res = [];
-	var args = [addr, cmd, param1, param2];
-	var buf = Buffer.from(args);
-	rpio.write(ppFRAME, rpio.HIGH);
-	rpio.spiWrite(buf, buf.length)
-	if (bytes2return > 0) {
-		var rxbuf = new Buffer(1);
-		var txbuf = new Buffer([0]);
-		rpio.spiSetClockDivider(500);
-		rpio.usleep(400);
-		for (var i = 0; i < bytes2return; i++) {
-			rpio.spiTransfer(txbuf, rxbuf, txbuf.length);
-			res.push(rxbuf[0]);
-		}
-	}
-	rpio.msleep(1);
-	rpio.write(ppFRAME, rpio.LOW);
-	rpio.msleep(1);
-	return (res);
-}
+var ppCMD = require('./plate_comms').ppCMD;
 
 function BASEplate(addr) {
 	this.addr = addr;
@@ -73,6 +39,7 @@ BASEplate.prototype.getHWrev = function() {
 }
 
 BASEplate.prototype.getFWrev = function() {
+	var ppCMD = this.ppCMD;
 	var resp = ppCMD(this.addr, 0x03, 0, 0, 1);
 	var rev = resp[0];
 	var whole = rev >> 4;
@@ -80,8 +47,4 @@ BASEplate.prototype.getFWrev = function() {
 	return (whole + (point / 10.0));
 }
 
-module.exports = {
-	BASEplate: BASEplate,
-	ppCMD: ppCMD,
-	rpio:rpio
-}
+module.exports = BASEplate;
