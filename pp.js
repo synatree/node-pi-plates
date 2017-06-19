@@ -23,37 +23,33 @@ function init() {
 
 	for (var i = 0; i < 8; i++) {
 		var resp;
-/*
+
 		resp = getADDR(i + RELAYbaseADDR);
 		//console.log('relay response: ' + resp);
 		if (resp - RELAYbaseADDR == i) {
 			console.log('found RELAYplate at address: ' + i);
 			RELAYplates[i] = new RELAYplate(i);
-
 		}
-*/
+
 		resp = getADDR(i + DAQCbaseADDR);
 		//console.log('daqc response: ' + resp);
 		if (resp - DAQCbaseADDR == i) {
-			//console.log('found DAQCplate at address: ' + i);
+			console.log('found DAQCplate at address: ' + i);
 			DAQCplates[i] = new DAQCplate(i);
-
 		}
-/*
+
 		resp = getADDR(i + MOTORbaseADDR);
-		console.log('motor response: ' + resp);
+		//console.log('motor response: ' + resp);
 		if (resp - MOTORbaseADDR == i) {
 			console.log('found MOTORplate at address: ' + i);
 			MOTORplates[i] = new MOTORplate(i);
 		}
-*/
 	}
 }
 
-setTimeout(function () {
+setInterval(function () {
 	init();
-	console.log(DAQCplates);
-}, 1000);
+}, 1500);
 
 /*
 
