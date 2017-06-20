@@ -9,8 +9,6 @@ const RELAYbaseADDR = 24;
 const DAQCbaseADDR = 8;
 const MOTORbaseADDR = 16;
 
-console.log('initializing rpi pins');
-
 rpio.init({gpiomem: false});
 rpio.open(ppFRAME, rpio.OUTPUT, rpio.LOW);
 rpio.msleep(1);
