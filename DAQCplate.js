@@ -12,7 +12,11 @@ function DAQCplate(addr) {
 inherits(DAQCplate, BASEplate);
 
 DAQCplate.prototype.getADC = function (channel) {
-
+	var resp = ppCMD(this.addr, 0x30, channel, 0, 2);
+	var value = 256 * resp[0] + resp[1];
+	console.log(resp);
+	value = (value * 4.096) / 1024;
+	return (value);
 }
 
 DAQCplate.prototype.getADCall = function () {
