@@ -8,6 +8,15 @@ function RELAYplate(addr) {
 	if (! (this instanceof RELAYplate))
 		return (new RELAYplate(addr)); 
 	BASEplate.call(this, RELAYbaseADDR + addr);
+/*
+	// take a few practice swings first
+	for (var i = 0; i < 3; i++) {
+		ppCMD(this.addr, 0x00, 0, 0, 1);
+	}
+
+	// now see if our address checks out
+	console.log('getADDR: ' + ppCMD(this.addr, 0x00, 0, 0, 1));
+ */
 }
 
 inherits(RELAYplate, BASEplate);

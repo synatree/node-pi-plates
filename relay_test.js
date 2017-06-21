@@ -10,3 +10,8 @@ setInterval(function () {
 	i = (i % 7) + 1;
 	rp0.relayTOGGLE(i);
 }, 300)
+
+process.on('exit', function() {
+	rp.0.relayALL(0);
+	exit();
+});

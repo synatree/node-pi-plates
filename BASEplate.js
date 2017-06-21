@@ -1,5 +1,6 @@
 var rpio = require('rpio');
 var ppCMD = require('./plate_comms').ppCMD;
+var ppFRAME = require('./plate_comms').ppFRAME;
 
 function BASEplate(addr) {
 	this.addr = addr;
@@ -23,6 +24,7 @@ BASEplate.prototype.getID = function () {
                 } else {
                         count = 20;
                 }
+		rpio.usleep(1);
         }
         rpio.write(ppFRAME, rpio.LOW);
         var rb = Buffer.from(recv);
@@ -39,7 +41,6 @@ BASEplate.prototype.getHWrev = function() {
 }
 
 BASEplate.prototype.getFWrev = function() {
-	var ppCMD = this.ppCMD;
 	var resp = ppCMD(this.addr, 0x03, 0, 0, 1);
 	var rev = resp[0];
 	var whole = rev >> 4;

@@ -8,6 +8,7 @@ var RELAYbaseADDR = plate_comms.RELAYbaseADDR;
 var DAQCbaseADDR = plate_comms.DAQCbaseADDR;
 var MOTORbaseADDR = plate_comms.MOTORbaseADDR;
 
+
 function scan() {
 	// poll for attached plates of each type
 	console.log('Scanning for Pi Plates');
@@ -16,6 +17,10 @@ function scan() {
 		var res = ppCMD(addr, 0x00, 0, 0, 1);
 		return (res);
 	}
+
+	// warm up a bit
+	for (var j = 0; j < 3; j++)
+		getADDR(j + RELAYbaseADDR);
 
 	for (var i = 0; i < 8; i++) {
 		var resp;

@@ -30,13 +30,8 @@ function ppCMD(addr, cmd, param1, param2, bytes2return) {
 		var txbuf = new Buffer([0]);
 		rpio.spiSetClockDivider(500);
 
-		// There is a lag that occurs here on older pi model B
-		// that causes the first msg in a series to miss the
-		// response.  Subsequent transfers don't lag as much,
-		// possibly due to the JS engine accelerating the hot
-		// path.  Anyway, removing this pause doesn't seem to break
-		// on either the old rpi model B or the pi 3
-		//rpio.usleep(100);
+		// to sleep, or not to sleep; that is the question
+		rpio.usleep(100);
 		for (var i = 0; i < bytes2return; i++) {
 			rpio.spiTransfer(txbuf, rxbuf, txbuf.length);
 			res.push(rxbuf[0]);
@@ -52,5 +47,6 @@ module.exports = {
 	ppCMD: ppCMD,
 	RELAYbaseADDR: RELAYbaseADDR,
 	DAQCbaseADDR: DAQCbaseADDR,
-	MOTORbaseADDR: MOTORbaseADDR
+	MOTORbaseADDR: MOTORbaseADDR,
+	ppFRAME: ppFRAME
 }
