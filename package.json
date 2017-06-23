@@ -1,5 +1,5 @@
 {
-  "name": "node-pi-plates",
+  "name": "pi-plates",
   "version": "0.0.1",
   "description": "control Pi-Plates from node",
   "main": "plates.js",
