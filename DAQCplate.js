@@ -23,11 +23,17 @@ DAQCplate.prototype.getADCall = function () {
 }
 
 DAQCplate.prototype.getDINbit = function (bit) {
-
+	var resp = ppCMD(this.addr, 0x20, bit, 0, 1);
+	if (resp[0] > 0) {
+		return (0);
+	} else {
+		return (1);
+	}
 }
 
 DAQCplate.prototype.getDINall = function () {
-
+	var resp = ppCMD(this.addr, 0x25, 0, 0, 1);
+	console.log(resp);
 }
 
 DAQCplate.prototype.enableDINint = function (bit, edge) {
@@ -67,23 +73,38 @@ DAQCplate.prototype.disableSWpower = function () {
 }
 
 DAQCplate.prototype.setDOUTbit = function (bit) {
-
+	ppCMD(this.addr, 0x10, bit, 0, 0);
 }
 
 DAQCplate.prototype.clrDOUTbit = function (bit) {
-
+	ppCMD(this.addr, 0x11, bit, 0, 0);
 }
 
 DAQCplate.prototype.toggleDOUTbit = function (bit) {
+	ppCMD(this.addr, 0x12, bit, 0, 0);
+}
 
+DAQCplate.prototype.getDOUTbit = function (bit) {
+	var state = this.getDOUTall();
+	return state[bit];
 }
 
 DAQCplate.prototype.setDOUTall = function (byte) {
 
 }
 
-DAQCplate.prototype.getDOUTall = function (byte) {
+DAQCplate.prototype.getDOUTbyte = function () {
+	var resp = ppCMD(this.addr, 0x14, 0, 0, 1);
+	return (resp);
+}
 
+DAQCplate.prototype.getDOUTall = function () {
+	var state = [];
+	var resp = this.getDOUTbyte();
+	for (var i = 0; i < 8; i++) {
+		state[i] = (resp[0] >> i) & 1;
+	}
+	return (state);
 }
 
 DAQCplate.prototype.setPWM = function (channel, value) {

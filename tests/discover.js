@@ -1,7 +1,7 @@
-var plate_comms = require('./plate_comms');
-var RELAYplate = require('./RELAYplate');
-var DAQCplate = require('./DAQCplate');
-var MOTORplate = require('./MOTORplate');
+var plate_comms = require('../plate_comms');
+var RELAYplate = require('../RELAYplate');
+var DAQCplate = require('../DAQCplate');
+var MOTORplate = require('../MOTORplate');
 
 var ppCMD = plate_comms.ppCMD;
 var RELAYbaseADDR = plate_comms.RELAYbaseADDR;
