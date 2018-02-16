@@ -1,3 +1,4 @@
+var rpio = require('rpio');
 var inherits = require('util').inherits;
 var BASEplate = require('./BASEplate');
 const DAQCbaseADDR = 8;
@@ -44,7 +45,13 @@ DAQCplate.prototype.disableDINint = function (bit) {
 }
 
 DAQCplate.prototype.getTEMP = function (channel, scale) {
-
+	var resp = this.ppCMD(this.addr, 0x70, channel, 0, 0);
+	rpio.sleep(1);
+	resp = this.ppCMD(this.addr, 0x71, channel, 0, 2);
+	var Temp = resp[0] * 256 + resp[1];
+	// degrees F only for now
+	Temp = Temp * 1.8 + 32.2;
+	return Temp;
 }
 
 DAQCplate.prototype.getRANGE = function (channel, units) {
