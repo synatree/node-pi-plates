@@ -81,7 +81,7 @@ while True:
             elif (cmd == "clrDOUTbit"):
                 bit = args['bit']
                 DP.clrDOUTbit(addr, bit)
-                resp['bit'] = state
+                resp['bit'] = bit
                 resp['state'] = 0
             elif (cmd == "getADC"):
                 channel = args['channel']
