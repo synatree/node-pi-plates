@@ -2,6 +2,7 @@ import sys
 import json
 import piplates.DAQCplate as DP
 import piplates.RELAYplate as RP
+import piplates.MOTORplate as MP
 
 # All Pi Plate communication must go through this one process to ensure
 # SPI communications don't overlap / interfere and corrupt the device state(s)
@@ -82,7 +83,20 @@ while True:
                 DP.clrDOUTbit(addr, bit)
                 resp['bit'] = state
                 resp['state'] = 0
+            elif (cmd == "getADC"):
+                channel = args['channel']
+                voltage = DP.getADC(addr, channel)
+                resp['channel'] = channel
+                resp['voltage'] = voltage
+            elif (cmd == "getTEMP"):
+                bit = args['bit']
+                scale = args['scale']
+                temp = DP.getTEMP(addr, bit, scale)
+                resp['temp'] = temp
+                resp['bit'] = bit
             print(json.dumps(resp))
+        elif (plate_type == "MOTOR"):
+            break
         else:
             sys.stderr.write("unknown plate_type: " + plate_type)
     except (EOFError, SystemExit):

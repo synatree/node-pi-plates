@@ -3,7 +3,19 @@ const readline = require('readline');
 const { spawn } = require('child_process');
 const assert = require('assert');
 
-const child = spawn('python', ['-u', __dirname + '/plate_io.py']);
+let child = spawn('python', ['-u', __dirname + '/plate_io.py']);
+
+child.on('error', (err) => {
+    console.log('child error: ' + err);
+});
+
+child.on('exit', (code, signal) => {
+    console.log(`code: ${code} signal: ${signal}`);
+});
+
+child.stderr.on('data', (data) => {
+    console.log('stderr: ' + data);
+});
 
 const rl = readline.createInterface({
     input: child.stdout
@@ -36,6 +48,9 @@ class BASEplate {
         obj['addr'] = this.addr;
 
         this.queue.push(obj, receive_cb);
+    }
+    shutdown () {
+        child.kill();
     }
 }
 
