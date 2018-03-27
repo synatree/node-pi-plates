@@ -83,6 +83,11 @@ while True:
                 DP.clrDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 0
+            elif (cmd == "toggleDOUTbit"):
+                bit = args['bit']
+                DP.toggleDOUTbit(addr, bit)
+                resp['bit'] = bit
+                resp['state'] = 'UNKNOWN'
             elif (cmd == "getADC"):
                 channel = args['channel']
                 voltage = DP.getADC(addr, channel)
@@ -94,6 +99,8 @@ while True:
                 temp = DP.getTEMP(addr, bit, scale)
                 resp['temp'] = temp
                 resp['bit'] = bit
+            else:
+                sys.stderr.write("unknown daqc cmd: " + cmd)
             print(json.dumps(resp))
         elif (plate_type == "MOTOR"):
             break
