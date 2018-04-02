@@ -72,7 +72,6 @@ while True:
                 state = DP.getDINbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = state
-                print(json.dumps(resp))
             elif (cmd == "setDOUTbit"):
                 bit = args['bit']
                 DP.setDOUTbit(addr, bit)
