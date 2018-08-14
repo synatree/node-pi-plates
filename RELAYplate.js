@@ -22,6 +22,12 @@ class RELAYplate extends BASEplate {
             this.send({cmd: "relayTOGGLE", args: { relay: num}}, resolve);
         });
     }
+
+    async relayState(num){
+        return await new Promise((resolve,reject)=>{
+            this.send({cmd: "relaySTATE", args: { relay: num}}, resolve);
+        });
+    }
 }
 
 module.exports = RELAYplate;
