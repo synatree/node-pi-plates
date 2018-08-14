@@ -1,5 +1,5 @@
 const BASEplate = require('./BASEplate');
-var lock = new AwaitLock();
+
 class RELAYplate extends BASEplate {
     constructor (addr, governor=0) {
         super(addr, "RELAY");
@@ -7,7 +7,7 @@ class RELAYplate extends BASEplate {
         {
             // it's important to know how many are currently on so that we can enforce the governing rule.
             this.totalOn = 0;
-            [0,1,2,3,4,5,6,7].forEach((n)=>{
+            [0,1,2,3,4,5,6,7].forEach(async (n)=>{
                 var v = await this.relayState(n);
                 if(v)
                 {
