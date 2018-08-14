@@ -43,7 +43,7 @@ class RELAYplate extends BASEplate {
     }
 
     async relayToggle(num){
-        return await new Promise((resolve,reject)=>{
+        return await new Promise(async (resolve,reject)=>{
             var cur = await this.relayState(num)
             if(! cur)
             {
