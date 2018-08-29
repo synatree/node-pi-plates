@@ -19,12 +19,6 @@ class DAQCplate extends BASEplate {
             this.send({cmd: "setDOUTbit", args: { bit }}, resolve);
         });
     }
-    async setDIN(bit)
-    {
-        return await new Promise((resolve,reject)=>{
-            this.send({cmd: "setDINbit", args: { bit }}, resolve);
-        });
-    }
 
     async getDIN(bit)
     {
@@ -33,12 +27,6 @@ class DAQCplate extends BASEplate {
         });
     }
 
-    async getDOUT(bit)
-    {
-        return await new Promise((resolve,reject)=>{
-            this.send({cmd: "getDOUTbit", args: { bit }}, resolve);
-        });
-    }
 }
 
 module.exports = DAQCplate;
