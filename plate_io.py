@@ -1,6 +1,7 @@
 import sys
 import json
 import piplates.DAQCplate as DP
+import piplates.DAQC2plate as DP2
 import piplates.RELAYplate as RP
 import piplates.MOTORplate as MP
 
@@ -69,33 +70,51 @@ while True:
         elif (plate_type == "DAQC"):
             if (cmd == "getDINbit"):
                 bit = args['bit']
-                state = DP.getDINbit(addr, bit)
+                try:
+                    state = DP.getDINbit(addr, bit)
+                except AssertionError:
+                    state = DP2.getDINbit(addr,bit)
                 resp['bit'] = bit
                 resp['state'] = state
             elif (cmd == "setDOUTbit"):
                 bit = args['bit']
-                DP.setDOUTbit(addr, bit)
+                try:
+                    DP.setDOUTbit(addr, bit)
+                except AssertionError:
+                    DP2.setDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 1
             elif (cmd == "clrDOUTbit"):
                 bit = args['bit']
-                DP.clrDOUTbit(addr, bit)
+                try:
+                    DP.clrDOUTbit(addr, bit)
+                except AssertionError:
+                    DP2.clrDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 0
             elif (cmd == "toggleDOUTbit"):
                 bit = args['bit']
-                DP.toggleDOUTbit(addr, bit)
+                try:
+                    DP.toggleDOUTbit(addr, bit)
+                except AssertionError:
+                    DP2.toggleDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 'UNKNOWN'
             elif (cmd == "getADC"):
                 channel = args['channel']
-                voltage = DP.getADC(addr, channel)
+                try:
+                    voltage = DP.getADC(addr, channel)
+                except AssertionError:
+                    voltage = DP2.getADC(addr, channel)
                 resp['channel'] = channel
                 resp['voltage'] = voltage
             elif (cmd == "getTEMP"):
                 bit = args['bit']
                 scale = args['scale']
-                temp = DP.getTEMP(addr, bit, scale)
+                try:
+                    temp = DP.getTEMP(addr, bit, scale)
+                except AssertionError:
+                    temp = DP2.getTEMP(addr, bit, scale)
                 resp['temp'] = temp
                 resp['bit'] = bit
             else:
