@@ -98,6 +98,30 @@ while True:
                 temp = DP.getTEMP(addr, bit, scale)
                 resp['temp'] = temp
                 resp['bit'] = bit
+            elif (cmd == "getDAC"):
+                channel = args['channel']
+                value = DP.getDAC(addr, channel)
+                resp['channel'] = channel
+                resp['value'] = value
+            elif (cmd == "setDAC"):
+                channel = args['channel']
+                value = args['value']
+                DP.setDAC(addr, channel, value)
+                resp['channel'] = channel
+                resp['value'] = value
+            elif (cmd == "getPWM"):
+                channel = args['channel']
+                value = DP.getPWM(addr, channel)
+                resp['channel'] = channel
+                resp['value'] = value
+            elif (cmd == "setPWM"):
+                channel = args['channel']
+                value = args['value']
+                DP.setPWM(addr, channel, value)
+                resp['channel'] = channel
+                resp['value'] = value
+            elif (cmd == "calDAC"):
+                DP.calDAC(addr)
             else:
                 sys.stderr.write("unknown daqc cmd: " + cmd)
             print(json.dumps(resp))
