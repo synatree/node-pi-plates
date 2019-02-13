@@ -1,6 +1,7 @@
 import sys
 import json
 import piplates.DAQCplate as DP
+import piplates.DAQC2plate as DP2
 import piplates.RELAYplate as RP
 import piplates.MOTORplate as MP
 
@@ -66,64 +67,69 @@ while True:
                 sys.stderr.write("unknown relay cmd: " + cmd)
                 break
             print(json.dumps(resp))
-        elif (plate_type == "DAQC"):
+        elif (plate_type == "DAQC" or plate_type == "DAQC2"):
+            # switch between DAQC and DAQC2 for their common API
+            if (plate_type == "DAQC2"):
+                PP = DP2
+            else:
+                PP = DP
             if (cmd == "getDINbit"):
                 bit = args['bit']
-                state = DP.getDINbit(addr, bit)
+                state = PP.getDINbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = state
             elif (cmd == "setDOUTbit"):
                 bit = args['bit']
-                DP.setDOUTbit(addr, bit)
+                PP.setDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 1
             elif (cmd == "clrDOUTbit"):
                 bit = args['bit']
-                DP.clrDOUTbit(addr, bit)
+                PP.clrDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 0
             elif (cmd == "toggleDOUTbit"):
                 bit = args['bit']
-                DP.toggleDOUTbit(addr, bit)
+                PP.toggleDOUTbit(addr, bit)
                 resp['bit'] = bit
                 resp['state'] = 'UNKNOWN'
             elif (cmd == "getADC"):
                 channel = args['channel']
-                voltage = DP.getADC(addr, channel)
+                voltage = PP.getADC(addr, channel)
                 resp['channel'] = channel
                 resp['voltage'] = voltage
             elif (cmd == "getTEMP"):
                 bit = args['bit']
                 scale = args['scale']
-                temp = DP.getTEMP(addr, bit, scale)
+                temp = PP.getTEMP(addr, bit, scale)
                 resp['temp'] = temp
                 resp['bit'] = bit
             elif (cmd == "getDAC"):
                 channel = args['channel']
-                value = DP.getDAC(addr, channel)
+                value = PP.getDAC(addr, channel)
                 resp['channel'] = channel
                 resp['value'] = value
             elif (cmd == "setDAC"):
                 channel = args['channel']
                 value = args['value']
-                DP.setDAC(addr, channel, value)
+                PP.setDAC(addr, channel, value)
                 resp['channel'] = channel
                 resp['value'] = value
             elif (cmd == "getPWM"):
                 channel = args['channel']
-                value = DP.getPWM(addr, channel)
+                value = PP.getPWM(addr, channel)
                 resp['channel'] = channel
                 resp['value'] = value
             elif (cmd == "setPWM"):
                 channel = args['channel']
                 value = args['value']
-                DP.setPWM(addr, channel, value)
+                PP.setPWM(addr, channel, value)
                 resp['channel'] = channel
                 resp['value'] = value
             elif (cmd == "calDAC"):
-                DP.calDAC(addr)
+                PP.calDAC(addr)
             else:
-                sys.stderr.write("unknown daqc cmd: " + cmd)
+                sys.stderr.write("unknown daqc(2) cmd: " + cmd)
             print(json.dumps(resp))
         elif (plate_type == "MOTOR"):
             break
