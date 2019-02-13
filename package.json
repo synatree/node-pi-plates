@@ -1,6 +1,6 @@
 {
   "name": "pi-plates",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "control Pi-Plates from node",
   "main": "plates.js",
   "directories": {
@@ -23,6 +23,7 @@
     "relay",
     "RELAYplate",
     "DAQCplate",
+    "DAQC2plate",
     "MOTORplate",
     "Pi-Plates",
     "pi",
